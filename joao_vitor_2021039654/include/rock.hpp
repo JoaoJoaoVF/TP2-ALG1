@@ -31,7 +31,7 @@ public:
     void imprimeNotas();
     void InicializaNotas();
     void DestroiNotas();
-    Rock SSM(int ini, int fim);
+    Rock SSM(Rock festival, int ini, int fim);
     void SSM_INTERATIVO(int ini, int fim);
     void imprimeDados(Rock resp);
 };

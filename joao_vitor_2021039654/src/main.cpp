@@ -58,7 +58,7 @@ int main()
     cout << endl;
 
     // festival.SSM_INTERATIVO(0, festival.Get_S());
-    retorno = festival.SSM(0, festival.Get_S());
+    retorno = festival.SSM(festival, 0, festival.Get_S());
     festival.imprimeDados(retorno);
 
     cout << endl;

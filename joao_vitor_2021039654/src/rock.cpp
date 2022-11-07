@@ -75,6 +75,7 @@ void Rock::SSM_INTERATIVO(int ini, int fim)
 
 double Rock::max(double a, double b)
 {
+    cout << a << " " << b << endl;
     if (a > b)
     {
         return a;
@@ -85,7 +86,7 @@ double Rock::max(double a, double b)
     }
 }
 
-Rock Rock::SSM(int ini, int fim)
+Rock Rock::SSM(Rock festival, int ini, int fim)
 {
     Rock sol;
     Rock esq;
@@ -93,14 +94,14 @@ Rock Rock::SSM(int ini, int fim)
 
     if (ini == fim)
     {
-        sol.soma = notas[ini];
-        sol.ssm = max(0, notas[ini]);
+        sol.soma = festival.notas[ini];
+        sol.ssm = max(0, festival.notas[ini]);
         sol.suf = ssm;
         sol.pref = ssm;
         return sol;
     }
-    esq = SSM(ini, (ini + fim) / 2);
-    dir = SSM((ini + fim) / 2 + 1, fim);
+    esq = SSM(festival, ini, (ini + fim) / 2);
+    dir = SSM(festival, (ini + fim) / 2 + 1, fim);
     soma = esq.soma + dir.soma;
     pref = max(esq.pref, esq.soma + dir.pref);
     suf = max(dir.suf, dir.soma + esq.suf);
