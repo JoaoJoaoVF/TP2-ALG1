@@ -34,6 +34,7 @@ public:
     Rock SSM(Rock festival, int ini, int fim);
     void SSM_INTERATIVO(int ini, int fim);
     void imprimeDados(Rock resp);
+    Rock SSM2(Rock festival, int ini, int fim);
 };
 
 #endif

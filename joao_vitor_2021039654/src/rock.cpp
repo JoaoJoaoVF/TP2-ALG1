@@ -1,12 +1,6 @@
 #include "../include/rock.hpp"
 using namespace std;
 
-void test()
-{
-
-    std::cout << "Funciona!";
-}
-
 void Rock::insereNotas(int pos, double nota)
 {
     // cout << notas.size() << endl;
@@ -75,7 +69,7 @@ void Rock::SSM_INTERATIVO(int ini, int fim)
 
 double Rock::max(double a, double b)
 {
-    cout << a << " " << b << endl;
+    // cout << a << " " << b << endl;
     if (a > b)
     {
         return a;
@@ -86,29 +80,50 @@ double Rock::max(double a, double b)
     }
 }
 
+// Rock Rock::SSM(Rock festival, int ini, int fim)
+// {
+
+//     if (ini == fim)
+//     {
+//         soma = festival.notas[ini];
+//         ssm = max(0, festival.notas[ini]);
+//         suf = ssm;
+//         pref = ssm;
+//         return sol;
+//     }
+//     esq = SSM(festival, ini, (ini + fim) / 2);
+//     dir = SSM(festival, (ini + fim) / 2 + 1, fim);
+//     soma = esq->soma + dir->soma;
+//     pref = max(esq->pref, esq->soma + dir->pref);
+//     suf = max(dir->suf, dir->soma + esq->suf);
+//     return sol;
+// }
+
+void Rock::imprimeDados(Rock resp)
+{
+    cout << resp.ssm << endl;
+}
+
+// Algorith Max cross subarray recursive
 Rock Rock::SSM(Rock festival, int ini, int fim)
 {
     Rock sol;
     Rock esq;
     Rock dir;
-
+    int meio = (ini + fim) / 2;
     if (ini == fim)
     {
         sol.soma = festival.notas[ini];
         sol.ssm = max(0, festival.notas[ini]);
-        sol.suf = ssm;
-        sol.pref = ssm;
+        sol.suf = sol.ssm;
+        sol.pref = sol.ssm;
         return sol;
     }
-    esq = SSM(festival, ini, (ini + fim) / 2);
-    dir = SSM(festival, (ini + fim) / 2 + 1, fim);
-    soma = esq.soma + dir.soma;
-    pref = max(esq.pref, esq.soma + dir.pref);
-    suf = max(dir.suf, dir.soma + esq.suf);
+    esq = SSM(festival, ini, meio);
+    dir = SSM(festival, meio + 1, fim);
+    sol.soma = esq.soma + dir.soma;
+    sol.pref = max(esq.pref, esq.soma + dir.pref);
+    sol.suf = max(dir.suf, dir.soma + esq.suf);
+    sol.ssm = max(esq.ssm, max(dir.ssm, esq.suf + dir.pref));
     return sol;
-}
-
-void Rock::imprimeDados(Rock resp)
-{
-    cout << resp.ssm << " " << resp.soma << endl;
 }
