@@ -54,14 +54,13 @@ int main()
     }
 
     // Impressao das notas
-    festival.imprimeNotas();
-    cout << endl;
+    // festival.imprimeNotas();
+    // cout << endl;
 
     // festival.SSM_INTERATIVO(0, festival.Get_S());
     retorno = festival.SSM(festival, 0, festival.Get_S());
     festival.imprimeDados(retorno);
 
-    cout << endl;
     cout << endl;
 
     // Destroi o vector de notas e coloca o tamanho dele como 0

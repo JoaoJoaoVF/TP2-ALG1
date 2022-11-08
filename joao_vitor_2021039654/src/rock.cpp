@@ -1,4 +1,8 @@
 #include "../include/rock.hpp"
+#include <algorithm>
+#include <iostream>
+#include <vector>
+#include <cmath>
 using namespace std;
 
 void Rock::insereNotas(int pos, double nota)
@@ -80,50 +84,61 @@ double Rock::max(double a, double b)
     }
 }
 
-// Rock Rock::SSM(Rock festival, int ini, int fim)
-// {
-
-//     if (ini == fim)
-//     {
-//         soma = festival.notas[ini];
-//         ssm = max(0, festival.notas[ini]);
-//         suf = ssm;
-//         pref = ssm;
-//         return sol;
-//     }
-//     esq = SSM(festival, ini, (ini + fim) / 2);
-//     dir = SSM(festival, (ini + fim) / 2 + 1, fim);
-//     soma = esq->soma + dir->soma;
-//     pref = max(esq->pref, esq->soma + dir->pref);
-//     suf = max(dir->suf, dir->soma + esq->suf);
-//     return sol;
-// }
-
 void Rock::imprimeDados(Rock resp)
 {
-    cout << resp.ssm << endl;
+    // for (int i = 0; i < resp.PosNotas.size(); i++)
+    // {
+    //     cout << resp.PosNotas[i] << " ";
+    // }
+    vector<int>::iterator max;
+    vector<int>::iterator min;
+    max = max_element(resp.PosNotas.begin(), resp.PosNotas.end());
+    min = min_element(resp.PosNotas.begin(), resp.PosNotas.end());
+    cout << *min << " " << *max << endl;
 }
 
-// Algorith Max cross subarray recursive
+// find the maximum and minimum of the vector PosNotas
+
+// Algorith Max recursive cross-subvector that returns the positions of the values that make up the maximum sum
 Rock Rock::SSM(Rock festival, int ini, int fim)
 {
-    Rock sol;
-    Rock esq;
-    Rock dir;
+    Rock resp;
     int meio = (ini + fim) / 2;
-    if (ini == fim)
+    int i = meio;
+    int j = meio + 1;
+    double soma = 0;
+    double somaEsq = 0;
+    double somaDir = 0;
+    double maior = 0;
+
+    // Soma da esquerda
+    for (i = meio; i >= ini; i--)
     {
-        sol.soma = festival.notas[ini];
-        sol.ssm = max(0, festival.notas[ini]);
-        sol.suf = sol.ssm;
-        sol.pref = sol.ssm;
-        return sol;
+        soma += festival.notas[i];
+        if (soma > somaEsq)
+        {
+            somaEsq = soma;
+            resp.PosNotas.emplace_back(i + 1);
+        }
     }
-    esq = SSM(festival, ini, meio);
-    dir = SSM(festival, meio + 1, fim);
-    sol.soma = esq.soma + dir.soma;
-    sol.pref = max(esq.pref, esq.soma + dir.pref);
-    sol.suf = max(dir.suf, dir.soma + esq.suf);
-    sol.ssm = max(esq.ssm, max(dir.ssm, esq.suf + dir.pref));
-    return sol;
+
+    // Soma da direita
+    soma = 0;
+    for (j = meio + 1; j <= fim; j++)
+    {
+        soma += festival.notas[j];
+        if (soma > somaDir)
+        {
+            somaDir = soma;
+            resp.PosNotas.emplace_back(j + 1);
+        }
+    }
+
+    // Maior soma
+    maior = somaEsq + somaDir;
+
+    // Impressao da maior soma
+    // cout << maior << endl;
+
+    return resp;
 }

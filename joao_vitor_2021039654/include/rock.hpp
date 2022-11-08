@@ -20,6 +20,9 @@ private:
     double suf;           // variavel que armazena o suf
     double pref;          // variavel que armazena o pref
     double max(double a, double b);
+    vector<int> PosNotas;
+    vector<int> PosSuf;
+    vector<int> PosPref;
 
 public:
     void test();
@@ -31,10 +34,10 @@ public:
     void imprimeNotas();
     void InicializaNotas();
     void DestroiNotas();
-    Rock SSM(Rock festival, int ini, int fim);
-    void SSM_INTERATIVO(int ini, int fim);
     void imprimeDados(Rock resp);
-    Rock SSM2(Rock festival, int ini, int fim);
+    Rock SSM(Rock festival, int ini, int fim);
+
+    void SSM_INTERATIVO(int ini, int fim);
 };
 
 #endif
