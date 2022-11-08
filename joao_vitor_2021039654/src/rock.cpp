@@ -142,3 +142,27 @@ Rock Rock::SSM(Rock festival, int ini, int fim)
 
     return resp;
 }
+/*
+Rock Rock::SSM(Rock festival, int ini, int fim) // alg do prof
+{
+    Rock sol;
+    Rock esq;
+    Rock dir;
+    int meio = (ini + fim) / 2;
+    if (ini == fim)
+    {
+        sol.soma = festival.notas[ini];
+        sol.ssm = max(0, festival.notas[ini]);
+        sol.suf = sol.ssm;
+        sol.pref = sol.ssm;
+        return sol;
+    }
+    esq = SSM(festival, ini, meio);
+    dir = SSM(festival, meio + 1, fim);
+    sol.soma = esq.soma + dir.soma;
+    sol.pref = max(esq.pref, esq.soma + dir.pref);
+    sol.suf = max(dir.suf, dir.soma + esq.suf);
+    sol.ssm = max(esq.ssm, max(dir.ssm, esq.suf + dir.pref));
+    return sol;
+}
+*/
