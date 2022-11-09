@@ -47,7 +47,23 @@ void Rock::imprimeDados(Rock resp)
     cout << *min << " " << *max << endl;
 }
 
-Rock Rock::SSM(Rock festival, int ini, int fim) // alg do prof
+int Rock::encontraEmpate(Rock resp)
+{
+    int Empate = 0;
+
+    auto it = find(notas.begin(), notas.end(), Empate);
+
+    if (it != notas.end())
+    {
+        int index = it - notas.begin();
+        return index + 1;
+    }
+    else
+    {
+        return -1000;
+    }
+}
+Rock Rock::SSM(Rock festival, int ini, int fim) 
 {
     Rock sol;
     Rock esq;
@@ -60,6 +76,13 @@ Rock Rock::SSM(Rock festival, int ini, int fim) // alg do prof
         sol.suf = sol.ssm;
         sol.pref = sol.ssm;
         sol.PosNotas.emplace_back(ini + 1);
+
+        int possuiEmpate = festival.encontraEmpate(festival);
+        if (possuiEmpate != -1000)
+        {
+            sol.PosNotas.emplace_back(possuiEmpate);
+        }
+
         return sol;
     }
     esq = SSM(festival, ini, meio);
@@ -71,15 +94,18 @@ Rock Rock::SSM(Rock festival, int ini, int fim) // alg do prof
     if (sol.ssm == esq.ssm)
     {
         sol.PosNotas = esq.PosNotas;
+        sol.PosNotas.insert(sol.PosNotas.end(), festival.PosNotasEmpate.begin(), festival.PosNotasEmpate.end());
     }
     else if (sol.ssm == dir.ssm)
     {
         sol.PosNotas = dir.PosNotas;
+        sol.PosNotas.insert(sol.PosNotas.end(), festival.PosNotasEmpate.begin(), festival.PosNotasEmpate.end());
     }
     else
     {
         sol.PosNotas = esq.PosNotas;
         sol.PosNotas.insert(sol.PosNotas.end(), dir.PosNotas.begin(), dir.PosNotas.end());
+        sol.PosNotas.insert(sol.PosNotas.end(), festival.PosNotasEmpate.begin(), festival.PosNotasEmpate.end());
     }
     return sol;
 }

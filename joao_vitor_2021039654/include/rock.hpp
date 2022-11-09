@@ -10,8 +10,6 @@ using namespace std;
 class Rock
 {
 private:
-    /* data */
-
     int A;                          // identificador do numero de amigos
     int S;                          // identificador do numero de shows
     vector<double> notas;           // vector de notas
@@ -21,9 +19,9 @@ private:
     double pref;                    // variavel que armazena o pref
     double max(double a, double b); // funcao que retorna o maior valor entre dois numeros
     vector<int> PosNotas;           // vector de posicoes das notas
+    vector<int> PosNotasEmpate;     // vector de posicoes das notas em caso de empate
 
 public:
-    void test();
     void Set_A(int a) { A = a; }               // seta o numero de amigos
     void Set_S(int s) { S = s; }               // seta o numero de shows
     const int &Get_A() { return A; }           // retorna o numero de amigos
@@ -34,6 +32,7 @@ public:
     void DestroiNotas();                       // destroi o vector de notas
     void imprimeDados(Rock resp);              // imprime os dados da classe Rock
     Rock SSM(Rock festival, int ini, int fim); // funcao que calcula o SSM
+    int encontraEmpate(Rock festival);         // funcao que encontra o empate
 };
 
 #endif
