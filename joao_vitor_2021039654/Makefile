@@ -10,7 +10,7 @@ CFLAGS = -g -Wall -c -I$(INC)
 
 EXE = $(BIN)/tp02
 
-all: comp exe
+all: comp 
 
 comp: $(BIN)/tp02
 

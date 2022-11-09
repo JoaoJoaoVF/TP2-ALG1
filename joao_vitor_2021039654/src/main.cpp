@@ -61,12 +61,12 @@ int main()
     retorno = festival.SSM(festival, 0, festival.Get_S());
     festival.imprimeDados(retorno);
 
-    cout << endl;
+    // cout << endl;
 
     // Destroi o vector de notas e coloca o tamanho dele como 0
     festival.DestroiNotas();
 
-  } while (festival.Get_A() != 0 && festival.Get_S() != 0);
+  } while (festival.Get_A() != 0 && festival.Get_S() != 0); //Enquanto não sao encontradas as condicoes de parada
 
   return (0);
 }
