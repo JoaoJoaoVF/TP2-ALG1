@@ -8,9 +8,9 @@ using namespace std;
 
 int main()
 {
-  // inicializa a classe Rock
-  Rock festival;
-  Rock retorno;
+
+  Rock festival; // inicializa a classe Rock que representa o festival
+  Rock retorno;  // inicializa a classe Rock que armazena o retorno da funcao SSM
 
   /*
     A representa a quantidade de amigos
@@ -20,47 +20,40 @@ int main()
 
   do
   {
-    // Leitura do numero de amigos e de shows
-    cin >> amigos >> shows;
 
-    festival.Set_A(amigos);
-    festival.Set_S(shows);
+    cin >> amigos >> shows; // Leitura do numero de amigos e de shows
 
-    // Finaliza o programa caso o numero de amigos e de shows seja 0
-    if (festival.Get_A() == 0 && festival.Get_S() == 0)
+    festival.Set_A(amigos); // seta o numero de amigos
+    festival.Set_S(shows);  // seta o numero de shows
+
+    if (festival.Get_A() == 0 && festival.Get_S() == 0) // Finaliza o programa caso o numero de amigos e de shows seja 0
     {
       break;
     }
 
     // Erros garantindo a integridade dos dados
-    erroAssert(festival.Get_A() >= 1, "É necessário pelo menos um seguidor");
-    erroAssert(festival.Get_S() >= 1, "É necessário pelo menos uma proposta");
-    erroAssert(festival.Get_A() <= 50, "O número de seguidores não pode ser maior que 1000");
-    erroAssert(festival.Get_S() <= 100000, "O número de propostas não pode ser maior que 10000");
+    erroAssert(festival.Get_A() >= 1, "É necessário pelo menos um amigo");
+    erroAssert(festival.Get_S() >= 1, "É necessário pelo menos uma shows");
+    erroAssert(festival.Get_A() <= 50, "O número de amigos não pode ser maior que 1000");
+    erroAssert(festival.Get_S() <= 100000, "O número de shows não pode ser maior que 10000");
 
-    festival.InicializaNotas();
+    festival.InicializaNotas(); // inicializa o vector de notas com 0 em todas as posições
 
-    // loop para leitura das notas
-    for (int i = 0; i < festival.Get_A() * festival.Get_S(); i++)
+    for (int i = 0; i < festival.Get_A() * festival.Get_S(); i++) // loop para leitura das notas
     {
-      // variavel que armazena a nota
-      double X;
 
-      // leitura das propostas
-      cin >> X;
+      double X; // variavel que armazena a nota
 
-      // Insere as notas no vector
-      festival.insereNotas(i % festival.Get_S(), X);
+      cin >> X; // leitura das shows
+
+      festival.insereNotas(i % festival.Get_S(), X); // Insere as notas no vector
     }
 
-    // Realiza o SSM
-    retorno = festival.SSM(festival, 0, festival.Get_S());
+    retorno = festival.SSM(festival, 0, festival.Get_S()); // Realiza o SSM e armazena o resultado na classe Rock retorno
 
-    // Imprime a resposta
-    festival.imprimeDados(retorno);
+    festival.imprimeDados(retorno); // Imprime a resposta
 
-    // Destroi o vector de notas e coloca o tamanho dele como 0
-    festival.DestroiNotas();
+    festival.DestroiNotas(); // Destroi o vector de notas e coloca o tamanho dele como 0
 
   } while (festival.Get_A() != 0 && festival.Get_S() != 0); // Enquanto não sao encontradas as condicoes de parada
 

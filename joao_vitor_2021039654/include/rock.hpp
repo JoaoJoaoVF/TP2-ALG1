@@ -4,6 +4,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <algorithm>
 #include <vector>
 using namespace std;
 
@@ -27,7 +28,6 @@ public:
     const int &Get_A() { return A; }           // retorna o numero de amigos
     const int &Get_S() { return S; }           // retorna o numero de shows
     void insereNotas(int pos, double nota);    // insere as notas no vector
-    void imprimeNotas();                       // imprime as notas
     void InicializaNotas();                    // inicializa o vector de notas com 0 em todas as posições
     void DestroiNotas();                       // destroi o vector de notas
     void imprimeDados(Rock resp);              // imprime os dados da classe Rock
