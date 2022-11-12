@@ -21,6 +21,8 @@ private:
     double max(double a, double b); // funcao que retorna o maior valor entre dois numeros
     vector<int> PosNotas;           // vector de posicoes das notas
     vector<int> PosNotasEmpate;     // vector de posicoes das notas em caso de empate
+    int primeiroindex;              // variavel que armazena o primeiro index
+    int ultimoindex;                // variavel que armazena o ultimo index
 
 public:
     void Set_A(int a) { A = a; }               // seta o numero de amigos
@@ -33,6 +35,7 @@ public:
     void imprimeDados(Rock resp);              // imprime os dados da classe Rock
     Rock SSM(Rock festival, int ini, int fim); // funcao que calcula o SSM
     int encontraEmpate(Rock festival);         // funcao que encontra o empate
+    void imprimeNotas();                       // imprime as notas
 };
 
 #endif
