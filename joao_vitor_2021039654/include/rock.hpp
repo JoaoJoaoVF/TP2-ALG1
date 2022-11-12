@@ -13,7 +13,6 @@ class Rock
 private:
     int A;                          // identificador do numero de amigos
     int S;                          // identificador do numero de shows
-    vector<double> notas;           // vector de notas
     double soma;                    // variavel que armazena a soma
     double ssm;                     // variavel que armazena o ssm
     double suf;                     // variavel que armazena o suf
@@ -25,6 +24,8 @@ private:
     int ultimoindex;                // variavel que armazena o ultimo index
 
 public:
+    vector<double> notas; // vector de notas
+
     void Set_A(int a) { A = a; }               // seta o numero de amigos
     void Set_S(int s) { S = s; }               // seta o numero de shows
     const int &Get_A() { return A; }           // retorna o numero de amigos
