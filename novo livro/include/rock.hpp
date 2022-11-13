@@ -31,4 +31,6 @@ void imprimeA(vector<double> &A); // imprime as A
 void imprimeResposta(Rock resp);
 Rock SSM(vector<double> &A, double low, double high);
 Rock SSM2(vector<double> &A, double low, double mid, double high);
+void apagaNotas(vector<double> &A);
+
 #endif

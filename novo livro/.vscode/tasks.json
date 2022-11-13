@@ -1,0 +1,25 @@
+{
+    "version": "2.0.0",
+    "tasks":[
+        {
+            "label": "compilar",
+            "type": "shell",
+            "command": "make exe < medium_input.txt",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "executar",
+            "type": "shell",
+            "command": "main",
+            "problemMatcher": [],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}

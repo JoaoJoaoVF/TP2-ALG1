@@ -24,7 +24,7 @@ Rock SSM2(vector<double> &A, double low, double mid, double high)
     for (double i = mid; i >= low; i--)
     {
         sol.sum += A[i];
-        if (sol.sum > sol.sumleft)
+        if (sol.sum >= sol.sumleft)
         {
             sol.sumleft = sol.sum;
             sol.firstindex = i;
@@ -35,7 +35,7 @@ Rock SSM2(vector<double> &A, double low, double mid, double high)
     for (double j = mid + 1; j <= high; j++)
     {
         sol.sum += A[j];
-        if (sol.sum > sol.sumright)
+        if (sol.sum >= sol.sumright)
         {
             sol.sumright = sol.sum;
             sol.lastindex = j;
@@ -88,4 +88,9 @@ Rock SSM(vector<double> &A, double low, double high)
         }
     }
     return sol;
+}
+
+void apagaNotas(vector<double> &A)
+{
+    A.clear();
 }
