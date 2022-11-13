@@ -1,80 +1,96 @@
 #include "../include/rock.hpp"
-using namespace std;
 
-// Realiza a inserção da nota do show na posição em que ela pertence
-void Rock::insereNotas(int pos, double nota)
+void imprimeA(vector<double> &A)
 {
-    notas[pos] += nota;
+    for (double i = 0; i < A.size(); i++)
+    {
+        cout << A[i] << " ";
+    }
+    cout << endl;
 }
 
-// Inicializa o vetor de notas com a quantidade de shows e com 0 em todas as posições
-void Rock::InicializaNotas()
+void imprimeResposta(Rock sol)
 {
-    for (int i = 0; i < Get_S(); i++)
-    {
-        notas.emplace_back(0);
-    }
+    cout << sol.firstindex + 1 << " " << sol.lastindex + 1 << endl;
 }
 
-// Realiza a impressao da resposta
-void Rock::imprimeDados(Rock resp)
+Rock SSM2(vector<double> &A, double low, double mid, double high)
 {
-    cout << resp.primeiroindex + 1 << " " << resp.ultimoindex + 1 << endl;
+    Rock sol;
+    sol.sumleft = -1000000000;
+    sol.sumright = -1000000000;
+    sol.sum = 0;
 
-    // cout << notas[resp.primeiroindex + 1] << " " << notas[resp.ultimoindex + 1] << endl;
-    // cout << resp.ssm << endl;
+    for (double i = mid; i >= low; i--)
+    {
+        sol.sum += A[i];
+        if (sol.sum >= sol.sumleft)
+        {
+            sol.sumleft = sol.sum;
+            sol.firstindex = i;
+        }
+    }
+
+    sol.sum = 0;
+    for (double j = mid + 1; j <= high; j++)
+    {
+        sol.sum += A[j];
+        if (sol.sum >= sol.sumright)
+        {
+            sol.sumright = sol.sum;
+            sol.lastindex = j;
+        }
+    }
+
+    sol.sum = sol.sumleft + sol.sumright;
+    return sol;
 }
 
-Rock Rock::SSM(Rock festival, int ini, int fim)
+Rock SSM(vector<double> &A, double low, double high)
 {
-    Rock sol; // A classe sol é a classe que armazena a resposta
-    Rock esq; // A classe esq é a classe que armazena a resposta da parte esquerda
-    Rock dir; // A classe dir é a classe que armazena a resposta da parte direita
+    Rock sol;
+    Rock left;
+    Rock right;
+    Rock cross;
 
-    int meio = (ini + fim) / 2; // Calcula o meio do vetor
-
-    if (ini == fim) // Condição de parada da recursão
+    if (low == high)
     {
-        sol.soma = festival.notas[ini]; // A soma recebe a nota do show
-        sol.ssm = festival.notas[ini];  // O ssm recebe o maior valor entre 0 e a nota do show
-        sol.suf = sol.ssm;              // O suf recebe o ssm
-        sol.pref = sol.ssm;             // O pref recebe o ssm
-
-        sol.primeiroindex = ini; // A variavel primeiroindex recebe a posição do show
-        sol.ultimoindex = fim;   // A variavel ultimoindex recebe a posição do show
-
-        return sol; // Retorna a classe sol
+        sol.sum = A[low];
+        sol.firstindex = low;
+        sol.lastindex = low;
+        return sol;
     }
-    esq = SSM(festival, ini, meio);                               // Chama a função SSM para a parte esquerda
-    dir = SSM(festival, meio + 1, fim);                           // Chama a função SSM para a parte direita
-    sol.soma = esq.soma + dir.soma;                               // A soma recebe a soma da parte esquerda + a soma da parte direita
-    sol.ssm = std::max({esq.ssm, dir.ssm, (esq.suf + dir.pref)}); // O ssm recebe o maior valor entre o ssm da parte esquerda, o ssm da parte direita e o suf da parte esquerda + o pref da parte direita
-    sol.suf = std::max(dir.suf, dir.soma + esq.suf);              // O suf recebe o maior valor entre o suf da parte direita e a soma da parte direita + o suf da parte esquerda
-    sol.pref = std::max(esq.pref, esq.soma + dir.pref);           // O pref recebe o maior valor entre o pref da parte esquerda e a soma da parte esquerda + o pref da parte direita
-
-    if (sol.ssm == esq.ssm) // Caso o ssm seja igual ao ssm da parte esquerda
+    else
     {
-        sol.primeiroindex = esq.primeiroindex; // A variavel primeiroindex recebe a variavel primeiroindex da parte esquerda
-        sol.ultimoindex = esq.ultimoindex;     // A variavel ultimoindex recebe a variavel ultimoindex da parte esquerda
-    }
-    else if (sol.ssm == dir.ssm) // Caso o ssm seja igual ao ssm da parte direita
-    {
+        double mid = floor((low + high) / 2);
 
-        sol.primeiroindex = dir.primeiroindex; // A variavel primeiroindex recebe a variavel primeiroindex da parte direita
-        sol.ultimoindex = dir.ultimoindex;     // A variavel ultimoindex recebe a variavel ultimoindex da parte direita
-    }
-    else if (sol.ssm == esq.suf + dir.pref) // Caso o ssm seja igual ao suf da parte esquerda + o pref da parte direita
-    {
-        // cout << "oi" << endl;
-        sol.primeiroindex = esq.primeiroindex; // A variavel primeiroindex recebe a variavel ultimoindex da parte esquerda
-        sol.ultimoindex = dir.ultimoindex;     // A variavel ultimoindex recebe a variavel primeiroindex da parte direita
-    }
+        left = SSM(A, low, mid);
+        right = SSM(A, mid + 1, high);
+        cross = SSM2(A, low, mid, high);
 
-    return sol; // Retorna a classe sol
+        if (left.sum >= right.sum && left.sum >= cross.sum)
+        {
+            sol.sum = left.sum;
+            sol.firstindex = left.firstindex;
+            sol.lastindex = left.lastindex;
+        }
+        else if (right.sum >= left.sum && right.sum >= cross.sum)
+        {
+            sol.sum = right.sum;
+            sol.firstindex = right.firstindex;
+            sol.lastindex = right.lastindex;
+        }
+        else
+        {
+            sol.sum = cross.sum;
+            sol.firstindex = cross.firstindex;
+            sol.lastindex = cross.lastindex;
+        }
+    }
+    return sol;
 }
 
-// Função que destroi o vetor de notas
-void Rock::DestroiNotas()
+void apagaNotas(vector<double> &A)
 {
-    notas.resize(0);
+    A.clear();
 }

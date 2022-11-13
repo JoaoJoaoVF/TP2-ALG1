@@ -27,4 +27,5 @@ $(OBJ)/rock.o: $(HDRS) $(SRC)/rock.cpp
 	$(CC) $(CFLAGS) -o $(OBJ)/rock.o $(SRC)/rock.cpp 
 
 clean:
-	rm -f $(EXE)* $(OBJS)* 	clear   
+	rm -f $(EXE)* $(OBJS)* 	
+	clear   
