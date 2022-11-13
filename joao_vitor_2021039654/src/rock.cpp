@@ -1,96 +1,90 @@
 #include "../include/rock.hpp"
 
-void imprimeA(vector<double> &A)
-{
-    for (double i = 0; i < A.size(); i++)
-    {
-        cout << A[i] << " ";
-    }
-    cout << endl;
-}
-
+// Realiza a impressao dos indices da resposta
 void imprimeResposta(Rock sol)
 {
-    cout << sol.firstindex + 1 << " " << sol.lastindex + 1 << endl;
+    cout << sol.primeiro_indice + 1 << " " << sol.ultimo_indice + 1 << endl;
 }
 
-Rock SSM2(vector<double> &A, double low, double mid, double high)
+// SSM dos elementos que cruzam o meio do vetor
+Rock SSM_Cruzado(vector<double> &notas, double ini, double meio, double fim)
 {
     Rock sol;
-    sol.sumleft = -1000000000;
-    sol.sumright = -1000000000;
-    sol.sum = 0;
+    sol.soma_esq = -1000000000000000000; // Inicializa a soma_esq com um valor proximo ao infinito
+    sol.soma_dir = -1000000000000000000; // Inicializa a soma_dir com um valor proximo ao infinito
+    sol.soma = 0;
 
-    for (double i = mid; i >= low; i--)
+    for (double i = meio; i >= ini; i--) // loop para encontrar a soma_esq
     {
-        sol.sum += A[i];
-        if (sol.sum >= sol.sumleft)
+        sol.soma += notas[i];
+
+        if (sol.soma >= sol.soma_esq)
         {
-            sol.sumleft = sol.sum;
-            sol.firstindex = i;
+            sol.soma_esq = sol.soma;
+            sol.primeiro_indice = i;
         }
     }
 
-    sol.sum = 0;
-    for (double j = mid + 1; j <= high; j++)
+    sol.soma = 0;
+
+    for (double j = meio + 1; j <= fim; j++) // loop para encontrar a soma_dir
     {
-        sol.sum += A[j];
-        if (sol.sum >= sol.sumright)
+        sol.soma += notas[j];
+
+        if (sol.soma >= sol.soma_dir)
         {
-            sol.sumright = sol.sum;
-            sol.lastindex = j;
+            sol.soma_dir = sol.soma;
+            sol.ultimo_indice = j;
         }
     }
 
-    sol.sum = sol.sumleft + sol.sumright;
+    sol.soma = sol.soma_esq + sol.soma_dir; // soma das somas_esq e somas_dir
+
     return sol;
 }
 
-Rock SSM(vector<double> &A, double low, double high)
+// SSM dos elementos do vetor
+Rock SSM(vector<double> &notas, double ini, double fim)
 {
     Rock sol;
-    Rock left;
-    Rock right;
-    Rock cross;
+    Rock esq;
+    Rock dir;
+    Rock cruzado;
 
-    if (low == high)
+    if (ini == fim) // condicao de parada
     {
-        sol.sum = A[low];
-        sol.firstindex = low;
-        sol.lastindex = low;
+        sol.soma = notas[ini];
+        sol.primeiro_indice = ini;
+        sol.ultimo_indice = ini;
         return sol;
     }
     else
     {
-        double mid = floor((low + high) / 2);
+        double meio = floor((ini + fim) / 2);
 
-        left = SSM(A, low, mid);
-        right = SSM(A, mid + 1, high);
-        cross = SSM2(A, low, mid, high);
+        esq = SSM(notas, ini, meio);
+        dir = SSM(notas, meio + 1, fim);
+        cruzado = SSM_Cruzado(notas, ini, meio, fim);
 
-        if (left.sum >= right.sum && left.sum >= cross.sum)
+        if (esq.soma >= dir.soma && esq.soma >= cruzado.soma) // caso o ssm esteja na posicao esquerda do vetor
         {
-            sol.sum = left.sum;
-            sol.firstindex = left.firstindex;
-            sol.lastindex = left.lastindex;
+            sol.soma = esq.soma;
+            sol.primeiro_indice = esq.primeiro_indice;
+            sol.ultimo_indice = esq.ultimo_indice;
         }
-        else if (right.sum >= left.sum && right.sum >= cross.sum)
+        else if (dir.soma >= esq.soma && dir.soma >= cruzado.soma) // caso o SSM esteja na posicao direita do vetor
         {
-            sol.sum = right.sum;
-            sol.firstindex = right.firstindex;
-            sol.lastindex = right.lastindex;
+            sol.soma = dir.soma;
+            sol.primeiro_indice = dir.primeiro_indice;
+            sol.ultimo_indice = dir.ultimo_indice;
         }
-        else
+        else // caso o SSM esteja cruzando o meio do vetor
         {
-            sol.sum = cross.sum;
-            sol.firstindex = cross.firstindex;
-            sol.lastindex = cross.lastindex;
+            sol.soma = cruzado.soma;
+            sol.primeiro_indice = cruzado.primeiro_indice;
+            sol.ultimo_indice = cruzado.ultimo_indice;
         }
     }
-    return sol;
-}
 
-void apagaNotas(vector<double> &A)
-{
-    A.clear();
+    return sol;
 }

@@ -15,22 +15,17 @@ using namespace std;
 class Rock
 {
 public:
-    double sum;        // variavel que armazena a sum
-    double Direita;    // variavel que armazena a posicao da righteita
-    double Esquerda;   // variavel que armazena a posicao da leftuerda
-    double sumleft;    // variavel que armazena a sum dos elementos da leftuerda
-    double sumright;   // variavel que armazena a sum dos elementos da righteita
-    double firstindex; // variavel que armazena o primeiro index
-    double lastindex;  // variavel que armazena o ultimo index
+    double soma;            // variavel que armazena a soma
+    double Direita;         // variavel que armazena a posicao da soma_dir
+    double Esquerda;        // variavel que armazena a posicao da soma_esq
+    double soma_esq;        // variavel que armazena a soma dos elementos da soma_esq
+    double soma_dir;        // variavel que armazena a soma dos elementos da soma_dir
+    double primeiro_indice; // variavel que armazena o primeiro indice
+    double ultimo_indice;   // variavel que armazena o ultimo indice
 };
-void InicializaA();               // inicializa o vector de A com 0 em todas as posições
-void DestroiA(vector<double> &A); // destroi o vector de A
-void imprimeDados(Rock resp);     // imprime os dados da classe Rock
-void imprimeA(vector<double> &A); // imprime as A
 
-void imprimeResposta(Rock resp);
-Rock SSM(vector<double> &A, double low, double high);
-Rock SSM2(vector<double> &A, double low, double mid, double high);
-void apagaNotas(vector<double> &A);
+void imprimeResposta(Rock resp);                                              // Funcao que imprime a resposta
+Rock SSM(vector<double> &notas, double ini, double fim);                      // Funcao que realiza o SSM
+Rock SSM_Cruzado(vector<double> &notas, double ini, double meio, double fim); // Funcao que realiza o SSM dos elementos que cruzam o meio do vetor
 
 #endif
